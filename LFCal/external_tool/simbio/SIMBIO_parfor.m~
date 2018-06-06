@@ -1,0 +1,44 @@
+function SIMBIO_parfor(DATAFolder,Programfolder,OUTFolder,list)
+
+tline = 1;
+c = 1;
+fid = fopen(list);
+while tline ~= -1
+    tline = fgetl(fid);
+    ids{c} = tline; %#ok<AGROW>
+    c = c+1;
+end
+fclose(fid);
+ids = char(ids{1:end-1});
+N = size(ids,1);
+Program = fullfile(Programfolder,'ipm_linux_opt_Venant');
+% matlabpool 2
+for i = 1:N
+    ID = ids(i,:);
+    meshfile = fullfile(DATAFolder,[ID '.v']);
+    if ~exist(meshfile,'file')
+        continue
+    end
+    elcfile = fullfile(DATAFolder,[ID '.elc']);
+    dipfile = fullfile(DATAFolder,[ID '.dip']);
+    outfile = fullfile(OUTFolder,ID);
+    parfile = fullfile(DATAFolder,[ID '.par']);
+    logfile = fullfile(OUTFolder,[ID '.log']);
+    shfile =  fullfile(OUTFolder,[ID '.sh']);
+    cmd = sprintf('%s -i sourcesimulation -h %s -s %s -dip %s -o %s -p %s -fwd FEM -sens EEG 2>&1 > %s',...
+        Program,meshfile,elcfile,dipfile,outfile,parfile,logfile);
+    fid = fopen(shfile,'wt');
+    fprintf(fid,'#!/usr/bin/env bash\n\n');
+    fprintf(fid,cmd);
+    fclose(fid);
+    [s,r] = unix(['sh ' shfile]); %#ok<NASGU>
+    delete(shfile);
+    movefile(fullfile(datafolder,[ID '.v.ascii']),fullfile(outfolder,[id '.v.ascii']));
+    movefile(fullfile(datafolder,[ID '.v.potential']),fullfile(outfolder,[id '.v.potential']));
+end
+% matlabpool close
+% for i = 1:N
+%     ID = ids(i,:);
+%     K = sb_read_msr(fullfile(DATAFolder,ID)); %#ok<NASGU>
+%     save(fullfile(OUTFolder,[ID '.mat']),'K');
+% end

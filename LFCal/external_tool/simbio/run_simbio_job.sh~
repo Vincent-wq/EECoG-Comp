@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+DATAFolder=/home/pedro/simbio_data
+Program=/usr/local/simbio/ipm_linux_opt_Venant
+OUTFolder=/home/pedro/simbio_data/sh_leadfieds
+mkdir -p $OUTFolder
+list=/home/pedro/simbio_data/list4sh.txt
+
+NSubjects=`wc -l "$list" | awk '{print $1}'`
+NSubjects=1
+
+for i in `seq 1 $NSubjects`; do
+ID=$(sed -n "$i"p $list)
+meshfile=$DATAFolder/$ID".v"
+elcfile=$DATAFolder/$ID".elc"
+dipfile=$DATAFolder/$ID".dip"
+parfile=$DATAFolder/$ID".par"
+outfile=$OUTFolder/$ID
+logfile=$OUTFolder/$ID".log"
+#qsub -q q_cluster_2 -q q_cluster_4 -wd /scratch/ \
+$Program -i sourcesimulation -h $meshfile -s $elcfile -dip $dipfile -o $outfile -p $parfile -fwd FEM -sens EEG  2>&1 > $logfile
+done

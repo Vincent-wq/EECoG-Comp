@@ -1,0 +1,102 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+
+	<title>
+	Transient Artifact Reduction Algorithm (TARA)
+	</title>
+</head>
+
+<body>
+
+
+<h3>
+Transient Artifact Reduction Algorithm (TARA) based on Sparse Optimization 
+</h3>
+
+<p>
+IEEE Transactions on Signal Processing, 2014.
+<br/>
+Ivan W. Selesnick, Harry L. Graber, Yin Ding, Tong Zhang, Randall L. Barbour
+</p>
+
+<p>
+Web: <a href="http://eeweb.poly.edu/iselesni/tara/">
+http://eeweb.poly.edu/iselesni/tara/
+</a>
+</p>
+
+<p>
+Software version: 1
+</p>
+
+<p>
+This software accompanies the above paper which addresses the suppression of transient artifacts in signals, 
+e.g.,  biomedical time series.
+</p>
+
+</p>
+
+<h4>
+Matlab implementation of transient artifact reduction algorithm (TARA)
+</h4>
+<ul>
+  <li>
+    <a href="lpfcsd.m">lpfcsd.m</a>: low-pass filtering / compound sparse denoising
+  </li>
+  <li>
+    <a href="lpfcsd2.m">lpfcsd2.m</a>: LPFCSD with input parameters {theta, sigma}
+  </li>
+  <li>
+    <a href="tara_L1.m">tara_L1.m</a>: TARA using the L1 norm penalty
+  </li>
+  <li>
+    <a href="tara2_L1.m">tara2_L1.m</a>: TARA using the L1 norm penalty, with input parameters {theta, beta, sigma}
+  </li>
+  <li>
+    <a href="tara.m">tara.m</a>: TARA with non-convex penalties
+  </li>
+  <li>
+    <a href="tara2.m">tara2.m</a>: TARA with non-convex penalties, with input parameters {theta, beta, sigma}
+  </li>
+</ul>
+
+
+<h4>Examples in Matlab</h4>
+
+<ul>
+	<li>
+	<a href="html/LPFCSD_Example.html">LPFCSD_Example</a>
+	Low-pass filtering and compound sparse denoising
+	</li>
+
+	<li>
+	<a href="html/TARA_Example1.html">TARA_Example1</a>
+	TARA applied to NIRS data
+	</li>
+
+	<li>
+	<a href="html/TARA_Example2.html">TARA_Example2</a>
+	TARA applied to NIRS data
+	</li>
+
+</ul>
+
+<h4>Acknowledgment</h4>
+
+<p>
+This research was supported by the NSF under Grant No. CCF-1018020,
+the NIH under Grant Nos. R42NS050007, R44NS049734, and R21NS067278, and by DARPA project N66001-10-C-2008.
+</p>
+
+
+</body>
+
+</html>
+
+

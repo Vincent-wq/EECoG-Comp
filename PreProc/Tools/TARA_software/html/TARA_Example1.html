@@ -1,0 +1,274 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>TARA_Example1: Transient Artifact Reduction Algorithm (TARA)</title><meta name="generator" content="MATLAB 7.12"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-10-05"><meta name="DC.source" content="TARA_Example1.m"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h1>TARA_Example1: Transient Artifact Reduction Algorithm (TARA)</h1><!--introduction--><p>TARA is designed to remove step and spike artifacts from data.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Start</a></li><li><a href="#2">Load data</a></li><li><a href="#3">Set parameters</a></li><li><a href="#4">Run TARA</a></li><li><a href="#6">Display output</a></li><li><a href="#7">TARA with non-convex penalty</a></li><li><a href="#8">Display output</a></li></ul></div><h2>Start<a name="1"></a></h2><pre class="codeinput">clear
+<span class="comment">% close all</span>
+
+set(0, <span class="string">'DefaultAxesFontSize'</span>, 9);
+</pre><h2>Load data<a name="2"></a></h2><pre class="codeinput">y = load(<span class="string">'data/wl2_col38.txt'</span>);
+
+N = length(y);
+n = 1:N;
+
+figure(1)
+clf
+plot(n, y);
+box <span class="string">off</span>
+title(<span class="string">'Data'</span>)
+</pre><img vspace="5" hspace="5" src="TARA_Example1_01.png" alt=""> <h2>Set parameters<a name="3"></a></h2><pre class="codeinput"><span class="comment">% Filter parameters</span>
+
+<span class="comment">% fc : cut-off frequency (cycles/sample) (0 &lt; fc &lt; 0.5);</span>
+<span class="comment">% fc = 0.04;</span>
+fc = 0.03;
+
+<span class="comment">% d : filter order parameter (d = 1, 2, or 3)</span>
+d = 1;
+
+<span class="comment">% ps : pseudo sigma (pseudo noise)</span>
+ps = 0.24;
+
+<span class="comment">% theta, beta : shape parameters</span>
+theta = 0.05;
+beta = 1.3;
+</pre><h2>Run TARA<a name="4"></a></h2><p>TARA: Transient artifact reducation algortithm</p><pre class="codeinput">Nit = 100;
+
+<span class="comment">% Run TARA</span>
+[x1, x2, f, cost] = tara2_L1(y, d, fc, theta, beta, ps, Nit);
+
+txt = sprintf(<span class="string">'fc = %.3f, d = %d, theta = %.3f, beta = %.3f, sigma = %.3f, %d iterations'</span>, fc, d, theta, beta, ps, Nit);
+</pre><p>Cost function history</p><pre class="codeinput">figure(1)
+clf
+plot(1:Nit, cost)
+xlabel(<span class="string">'iterations'</span>)
+title(<span class="string">'Cost function history'</span>)
+box <span class="string">off</span>
+</pre><img vspace="5" hspace="5" src="TARA_Example1_02.png" alt=""> <h2>Display output<a name="6"></a></h2><pre class="codeinput">signals = [y x1 x2-5 x1+x2 y-x1-x2+25];
+labels = {<span class="string">'Raw data'</span>,<span class="string">'Type 1 artifact'</span>, <span class="string">'Type 2 artifact'</span>, <span class="string">'Total artifact'</span>, <span class="string">'Corrected data (L1 norm penalty)'</span>};
+M = length(labels);
+gap = 25;
+
+figure(2)
+clf
+plot(n, bsxfun(@plus, -(0:M-1)*gap, signals), <span class="string">'black'</span>)
+
+tt = text(1800*ones(1,M), gap*(0.3-(0:M-1)), labels);
+set(tt, <span class="string">'HorizontalAlignment'</span>, <span class="string">'right'</span>)
+title(<span class="string">'TARA (L1 norm penalty)'</span>)
+xlabel( txt )
+
+orient <span class="string">tall</span>
+print <span class="string">-dpdf</span> <span class="string">figures/TARA_Example1_fig1</span>
+</pre><img vspace="5" hspace="5" src="TARA_Example1_03.png" alt=""> <h2>TARA with non-convex penalty<a name="7"></a></h2><pre class="codeinput">pen = <span class="string">'atan'</span>;
+r = 0.5;
+
+<span class="comment">% Initialize with L1 solution</span>
+[x1, x2, f, cost_, u1, u2] = tara2(y, d, fc, theta, beta, ps, <span class="string">'L1'</span>, 0, 0, 0, Nit);
+[x1_ncvx, x2_ncvx, f_ncvx, cost_ncvx] = tara2(y, d, fc, theta, beta, ps, pen, r, r, r, Nit, u1, u2);
+
+txt2 = sprintf(<span class="string">'%s penalty, r0 = %.3f, r1 = %.3f, r2 = %.3f'</span>, pen, r, r, r);
+</pre><h2>Display output<a name="8"></a></h2><pre class="codeinput">signals = [y x1_ncvx x2_ncvx-10 x1_ncvx+x2_ncvx-5 y-x1_ncvx-x2_ncvx+20];
+labels = {<span class="string">'Raw data'</span>,<span class="string">'Type 1 artifact'</span>, <span class="string">'Type 2 artifact'</span>, <span class="string">'Total artifact'</span>, <span class="string">'Corrected data (atan penalty)'</span>};
+M = length(labels);
+gap = 25;
+
+figure(2)
+clf
+plot(n, bsxfun(@plus, -(0:M-1)*gap, signals), <span class="string">'black'</span>)
+
+tt = text(1800*ones(1,M), gap*(0.3-(0:M-1)), labels);
+set(tt, <span class="string">'HorizontalAlignment'</span>, <span class="string">'right'</span>)
+title(<span class="string">'TARA (atan penalty)'</span>)
+xlabel( txt )
+
+orient <span class="string">tall</span>
+print <span class="string">-dpdf</span> <span class="string">figures/TARA_Example1_fig2</span>
+</pre><img vspace="5" hspace="5" src="TARA_Example1_04.png" alt=""> <pre class="codeinput">set(0, <span class="string">'DefaultAxesFontSize'</span>, <span class="string">'remove'</span>);
+</pre><p class="footer"><br>
+      Published with MATLAB&reg; 7.12<br></p></div><!--
+##### SOURCE BEGIN #####
+%% TARA_Example1: Transient Artifact Reduction Algorithm (TARA)
+% TARA is designed to remove step and spike artifacts from data.
+
+
+%% Start
+
+clear
+% close all
+
+set(0, 'DefaultAxesFontSize', 9);
+
+%% Load data
+
+y = load('data/wl2_col38.txt');
+
+N = length(y);
+n = 1:N;
+
+figure(1)
+clf
+plot(n, y);
+box off
+title('Data')
+
+%% Set parameters
+
+% Filter parameters
+
+% fc : cut-off frequency (cycles/sample) (0 < fc < 0.5);
+% fc = 0.04;             
+fc = 0.03;
+
+% d : filter order parameter (d = 1, 2, or 3)
+d = 1;
+
+% ps : pseudo sigma (pseudo noise)
+ps = 0.24;
+
+% theta, beta : shape parameters
+theta = 0.05;
+beta = 1.3;
+
+
+%% Run TARA
+% TARA: Transient artifact reducation algortithm 
+
+Nit = 100;
+
+% Run TARA
+[x1, x2, f, cost] = tara2_L1(y, d, fc, theta, beta, ps, Nit);
+
+txt = sprintf('fc = %.3f, d = %d, theta = %.3f, beta = %.3f, sigma = %.3f, %d iterations', fc, d, theta, beta, ps, Nit);
+
+
+%%
+% Cost function history
+
+figure(1)
+clf
+plot(1:Nit, cost)
+xlabel('iterations')
+title('Cost function history')
+box off
+
+
+%% Display output
+
+signals = [y x1 x2-5 x1+x2 y-x1-x2+25];
+labels = {'Raw data','Type 1 artifact', 'Type 2 artifact', 'Total artifact', 'Corrected data (L1 norm penalty)'};
+M = length(labels);
+gap = 25;
+
+figure(2)
+clf
+plot(n, bsxfun(@plus, -(0:M-1)*gap, signals), 'black')
+
+tt = text(1800*ones(1,M), gap*(0.3-(0:M-1)), labels);
+set(tt, 'HorizontalAlignment', 'right')
+title('TARA (L1 norm penalty)')
+xlabel( txt )
+
+orient tall
+print -dpdf figures/TARA_Example1_fig1
+
+
+%% TARA with non-convex penalty
+
+pen = 'atan';
+r = 0.5;
+
+% Initialize with L1 solution
+[x1, x2, f, cost_, u1, u2] = tara2(y, d, fc, theta, beta, ps, 'L1', 0, 0, 0, Nit);
+[x1_ncvx, x2_ncvx, f_ncvx, cost_ncvx] = tara2(y, d, fc, theta, beta, ps, pen, r, r, r, Nit, u1, u2);
+
+txt2 = sprintf('%s penalty, r0 = %.3f, r1 = %.3f, r2 = %.3f', pen, r, r, r);
+
+
+%% Display output
+
+signals = [y x1_ncvx x2_ncvx-10 x1_ncvx+x2_ncvx-5 y-x1_ncvx-x2_ncvx+20];
+labels = {'Raw data','Type 1 artifact', 'Type 2 artifact', 'Total artifact', 'Corrected data (atan penalty)'};
+M = length(labels);
+gap = 25;
+
+figure(2)
+clf
+plot(n, bsxfun(@plus, -(0:M-1)*gap, signals), 'black')
+
+tt = text(1800*ones(1,M), gap*(0.3-(0:M-1)), labels);
+set(tt, 'HorizontalAlignment', 'right')
+title('TARA (atan penalty)')
+xlabel( txt )
+
+orient tall
+print -dpdf figures/TARA_Example1_fig2
+
+
+%%
+
+set(0, 'DefaultAxesFontSize', 'remove');
+
+
+
+##### SOURCE END #####
+--></body></html>

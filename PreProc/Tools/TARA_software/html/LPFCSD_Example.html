@@ -1,0 +1,610 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>LPFCSD_Example</title><meta name="generator" content="MATLAB 7.12"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-10-05"><meta name="DC.source" content="LPFCSD_Example.m"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h1>LPFCSD_Example</h1><!--introduction--><p>Illustrate LPF/CSD processing for estimation of zero base-line transient artifacts in NIRS data.</p><pre>Ivan Selesnick,
+Polytechnic Institute of NYU, Brooklyn, NY, USA.
+January 2014. Revised July 2014.</pre><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Start</a></li><li><a href="#2">Load data</a></li><li><a href="#3">Set parameters</a></li><li><a href="#4">Set theta = 1</a></li><li><a href="#5">Set theta = 0</a></li><li><a href="#7">Intermediate theta value</a></li><li><a href="#8">Display output signals</a></li><li><a href="#9">Display corrected data</a></li><li><a href="#10">Display cost function history</a></li><li><a href="#11">Lambda parameters</a></li><li><a href="#12">Non-convex penalty</a></li></ul></div><h2>Start<a name="1"></a></h2><pre class="codeinput">clear
+<span class="comment">% close all</span>
+</pre><h2>Load data<a name="2"></a></h2><pre class="codeinput">y = load(<span class="string">'data/wl1_col02.txt'</span>);
+
+N = length(y);
+n = 1:N;
+
+figure(1)
+clf
+
+subplot(2, 1, 1)
+plot(n, y);
+xlim([0 N])
+ax1 = axis;
+axis(ax1);
+title(<span class="string">'Raw data'</span>)
+xlabel(<span class="string">'Time (n)'</span>)
+
+xlim1 = [900 1800];
+
+subplot(2, 1, 2)
+plot(n, y);
+xlim(xlim1)
+title(<span class="string">'Raw data [Detail]'</span>)
+xlabel(<span class="string">'Time (n)'</span>)
+</pre><img vspace="5" hspace="5" src="LPFCSD_Example_01.png" alt=""> <h2>Set parameters<a name="3"></a></h2><pre class="codeinput"><span class="comment">% Filter parameters</span>
+fc = 0.05;       <span class="comment">% fc : cut-off frequency (cycles/sample)</span>
+d = 1;           <span class="comment">% d : filter order parameter (d = 1, 2, or 3)</span>
+
+<span class="comment">% ps : psuedo-sigma (psuedo noise standard deviation)</span>
+ps = 0.65;
+
+<span class="comment">% Nit: number of algorithm iterations</span>
+Nit = 30;
+</pre><h2>Set theta = 1<a name="4"></a></h2><p>Equivalently, lam1 = 0. This value of theta leads to output x being sparse (if the psuudo-sigma is suitably set).</p><pre class="codeinput"><span class="comment">% theta : shape parameter</span>
+theta = 1;
+
+<span class="comment">% Run LPF/CSD algorithm</span>
+[x0, f, cost] = lpfcsd2(y, d, fc, theta, ps, <span class="string">'L1'</span>, 0, 0, Nit);
+
+txt0 = sprintf(<span class="string">'LPF/CSD [L1 penalty, \\theta = %.3f, \\sigma = %.3f]'</span>, theta, ps);
+
+figure(1)
+clf
+
+subplot(2, 1, 1)
+plot(n, y)
+xlim(xlim1)
+title(<span class="string">'Raw data'</span>)
+xlabel(<span class="string">'Time (n)'</span>)
+
+subplot(2, 1, 2)
+plot(n, x0);
+xlim(xlim1)
+title(txt0)
+xlabel(<span class="string">'Time (n)'</span>)
+</pre><img vspace="5" hspace="5" src="LPFCSD_Example_02.png" alt=""> <h2>Set theta = 0<a name="5"></a></h2><p>Equivalently, lam0 = 0. This value of theta leads to output x for which the derivative is sparse (if the psuudo-sigma is suitably set).</p><pre class="codeinput"><span class="comment">% theta : shape parameter</span>
+theta = 0;
+
+<span class="comment">% Run LPF/CSD algorithm</span>
+[x1, f, cost] = lpfcsd2(y, d, fc, theta, ps, <span class="string">'L1'</span>, 0, 0, Nit);
+
+txt1 = sprintf(<span class="string">'LPF/CSD [L1 penalty, \\theta = %.3f, \\sigma = %.3f]'</span>, theta, ps);
+
+figure(1)
+clf
+
+subplot(2, 1, 1)
+plot(n, y)
+xlim(xlim1)
+title(<span class="string">'Raw data'</span>)
+xlabel(<span class="string">'Time (n)'</span>)
+
+subplot(2, 1, 2)
+plot(n, x1);
+xlim(xlim1)
+title(txt1)
+xlabel(<span class="string">'Time (n)'</span>)
+</pre><img vspace="5" hspace="5" src="LPFCSD_Example_03.png" alt=""> <p>With theta = 1, the CSD component does not have the little blocks. With theta = 0, the CSD component does not have a baseline of zero.</p><h2>Intermediate theta value<a name="7"></a></h2><p>0 &lt; theta &lt; 1</p><pre class="codeinput"><span class="comment">% theta : shape parameter</span>
+theta = 0.05;
+
+<span class="comment">% Run LPF/CSD algorithm</span>
+[x, f, cost, lam0, lam1] = lpfcsd2(y, d, fc, theta, ps, <span class="string">'L1'</span>, 0, 0, Nit);
+
+txt = sprintf(<span class="string">'LPF/CSD [L1 penalty, \\theta = %.3f, \\sigma = %.3f]'</span>, theta, ps);
+
+figure(1)
+clf
+
+subplot(2, 1, 1)
+plot(n, y)
+xlim(xlim1)
+title(<span class="string">'Raw data'</span>)
+xlabel(<span class="string">'Time (n)'</span>)
+
+subplot(2, 1, 2)
+plot(n, x);
+xlim(xlim1)
+title(txt)
+xlabel(<span class="string">'Time (n)'</span>)
+</pre><img vspace="5" hspace="5" src="LPFCSD_Example_04.png" alt=""> <h2>Display output signals<a name="8"></a></h2><pre class="codeinput">set(0, <span class="string">'DefaultAxesFontSize'</span>, 9)
+
+figure(2)
+clf
+
+subplot(4, 1, 1)
+line(n, y);
+title(<span class="string">'Raw data'</span>)
+xlim([0 N])
+xlabel(<span class="string">'Time (n)'</span>)
+
+subplot(4, 1, 2)
+line(n, x0)
+title(txt0)
+xlim([0 N])
+xlabel(<span class="string">'Time (n)'</span>)
+
+subplot(4, 1, 3)
+line(n, x1)
+title(txt1)
+xlim([0 N])
+xlabel(<span class="string">'Time (n)'</span>)
+
+subplot(4, 1, 4)
+line(n, x);
+title(txt)
+xlim([0 N])
+xlabel(<span class="string">'Time (n)'</span>)
+
+figtitle(<span class="string">'Estimation of Artifacts using LPF/CSD with L1 Penalty'</span>);
+
+orient <span class="string">tall</span>
+print <span class="string">-dpdf</span> <span class="string">figures/LPFCSD_Example_fig1</span>
+</pre><img vspace="5" hspace="5" src="LPFCSD_Example_05.png" alt=""> <img vspace="5" hspace="5" src="LPFCSD_Example_06.png" alt=""> <h2>Display corrected data<a name="9"></a></h2><pre class="codeinput">figure(2)
+clf
+
+subplot(4, 1, 1)
+line(n, y, <span class="string">'color'</span>, <span class="string">'black'</span>);
+title(<span class="string">'Raw data'</span>);
+xlim([0 N])
+xlabel(<span class="string">'Time (n)'</span>)
+
+subplot(4, 1, 2)
+line(n, x - median(x), <span class="string">'color'</span>, <span class="string">'black'</span>);
+title(txt)
+xlim([0 N])
+xlabel(<span class="string">'Time (n)'</span>)
+
+subplot(4, 1, 3)
+line(n, y - x, <span class="string">'color'</span>, <span class="string">'black'</span>);
+title(<span class="string">'Corrected data'</span>)
+xlabel(<span class="string">'Time (n)'</span>)
+xlim([0 N])
+
+GRAY = [1 1 1] * 0.7;
+subplot(4, 1, 4)
+line(n, y, <span class="string">'color'</span>, GRAY, <span class="string">'lineWidth'</span>, 1)
+line(n, y - x, <span class="string">'color'</span>, <span class="string">'black'</span>);
+legend(<span class="string">'Raw data'</span>, <span class="string">'Corrected data'</span>)
+xlim([0 N])
+xlabel(<span class="string">'Time (n)'</span>)
+
+figtitle(<span class="string">'Artifact Correction using LPF/CSD with L1 Penalty'</span>);
+
+orient <span class="string">tall</span>
+print <span class="string">-dpdf</span> <span class="string">figures/LPFCSD_Example_fig2</span>
+</pre><img vspace="5" hspace="5" src="LPFCSD_Example_07.png" alt=""> <h2>Display cost function history<a name="10"></a></h2><p>The cost function converges within 30 iterations.</p><pre class="codeinput">figure(1)
+clf
+plot(cost)
+title(<span class="string">'Cost function history'</span>)
+xlabel(<span class="string">'Iteration'</span>)
+</pre><img vspace="5" hspace="5" src="LPFCSD_Example_08.png" alt=""> <h2>Lambda parameters<a name="11"></a></h2><p>Verify that lpfcsd and lpfcsd2 give the same output signals when lpfcsd is used with the corresponding lambda parameter values.</p><pre class="codeinput"><span class="comment">% Run LPF/CSD algorithm</span>
+[x, f, cost, lam0, lam1] = lpfcsd2(y, d, fc, theta, ps, <span class="string">'L1'</span>, 0, 0, Nit);
+[x_, f_, cost_] = lpfcsd(y, d, fc, lam0, lam1, <span class="string">'L1'</span>, 0, 0, Nit);
+
+<span class="comment">% These values should be zero or approximately zero</span>
+disp(max(abs(x - x_)))
+disp(max(abs(f - f_)))
+disp(max(abs(cost - cost_)))
+</pre><pre class="codeoutput">     0
+
+     0
+
+     0
+
+</pre><h2>Non-convex penalty<a name="12"></a></h2><p>The L1 norm penalty, used above, can lead to an under-estimation of the amplitudes of transients. Non-convex penalties can estimate the amplitude of transients more fully. Here, we use the 'atan' non-convex penalty.</p><pre class="codeinput"><span class="comment">% theta : shape parameter</span>
+theta = 0.05;
+
+<span class="comment">% pen : penalty function</span>
+pen = <span class="string">'atan'</span>;
+
+<span class="comment">% r : non-convexity parameter (nominal value = 0.5)</span>
+r = 0.5;
+
+txt = sprintf(<span class="string">'LPF/CSD [%s penalty, \\theta = %.3f, \\sigma = %.3f]'</span>, pen, theta, ps);
+
+<span class="comment">% Run LPF/CSD algorithm</span>
+<span class="comment">% Initialize with L1 solution</span>
+[x_atan, f_atan, cost, lam0, lam1] = lpfcsd2(y, d, fc, theta, ps, pen, r, r, Nit, x);
+<span class="comment">% [x_atan, f_atan, cost, lam0, lam1] = lpfcsd2(y, d, fc, theta, ps, pen, r, r, Nit);</span>
+
+figure(2)
+clf
+
+subplot(4, 1, 1)
+line(n, y, <span class="string">'color'</span>, <span class="string">'black'</span>);
+title(<span class="string">'Raw data'</span>);
+xlabel(<span class="string">'Time (n)'</span>)
+xlim([0 N])
+
+subplot(4, 1, 2)
+line(n, x_atan - median(x_atan), <span class="string">'color'</span>, <span class="string">'black'</span>);
+title(txt)
+xlabel(<span class="string">'Time (n)'</span>)
+xlim([0 N])
+
+subplot(4, 1, 3)
+line(n, y - x_atan, <span class="string">'color'</span>, <span class="string">'black'</span>);
+title(<span class="string">'Corrected data'</span>)
+xlabel(<span class="string">'Time (n)'</span>)
+xlim([0 N])
+
+GRAY = [1 1 1] * 0.7;
+subplot(4, 1, 4)
+line(n, y, <span class="string">'color'</span>, GRAY, <span class="string">'lineWidth'</span>, 1)
+line(n, y - x_atan, <span class="string">'color'</span>, <span class="string">'black'</span>);
+legend(<span class="string">'Raw data'</span>, <span class="string">'Corrected data'</span>)
+xlabel(<span class="string">'Time (n)'</span>)
+xlim([0 N])
+
+figtitle(<span class="string">'Artifact Correction using LPF/CSD with Arctangent Penalty'</span>);
+
+orient <span class="string">tall</span>
+print <span class="string">-dpdf</span> <span class="string">figures/LPFCSD_Example_fig3</span>
+</pre><img vspace="5" hspace="5" src="LPFCSD_Example_09.png" alt=""> <pre class="codeinput">set(0, <span class="string">'DefaultAxesFontSize'</span>, <span class="string">'remove'</span>)
+</pre><p class="footer"><br>
+      Published with MATLAB&reg; 7.12<br></p></div><!--
+##### SOURCE BEGIN #####
+%% LPFCSD_Example
+% Illustrate LPF/CSD processing for estimation of zero base-line transient artifacts
+% in NIRS data.
+%
+%  Ivan Selesnick,
+% Polytechnic Institute of NYU, Brooklyn, NY, USA.
+% January 2014. Revised July 2014.
+
+%% Start
+
+clear
+% close all
+
+%% Load data
+
+y = load('data/wl1_col02.txt');
+
+N = length(y);
+n = 1:N;
+
+figure(1)
+clf
+
+subplot(2, 1, 1)
+plot(n, y);
+xlim([0 N])
+ax1 = axis;
+axis(ax1);
+title('Raw data')
+xlabel('Time (n)')
+
+xlim1 = [900 1800];
+
+subplot(2, 1, 2)
+plot(n, y);
+xlim(xlim1)
+title('Raw data [Detail]')
+xlabel('Time (n)')
+
+
+
+%% Set parameters
+
+% Filter parameters
+fc = 0.05;       % fc : cut-off frequency (cycles/sample)
+d = 1;           % d : filter order parameter (d = 1, 2, or 3)
+
+% ps : psuedo-sigma (psuedo noise standard deviation)
+ps = 0.65;   
+
+% Nit: number of algorithm iterations
+Nit = 30;
+
+
+%% Set theta = 1
+% Equivalently, lam1 = 0. 
+% This value of theta leads to output x being sparse (if the psuudo-sigma
+% is suitably set).
+
+% theta : shape parameter
+theta = 1;
+
+% Run LPF/CSD algorithm
+[x0, f, cost] = lpfcsd2(y, d, fc, theta, ps, 'L1', 0, 0, Nit);       
+
+txt0 = sprintf('LPF/CSD [L1 penalty, \\theta = %.3f, \\sigma = %.3f]', theta, ps);
+
+figure(1)
+clf
+
+subplot(2, 1, 1)
+plot(n, y)
+xlim(xlim1)
+title('Raw data')
+xlabel('Time (n)')
+
+subplot(2, 1, 2)
+plot(n, x0);
+xlim(xlim1)
+title(txt0)
+xlabel('Time (n)')
+
+
+%% Set theta = 0
+% Equivalently, lam0 = 0. 
+% This value of theta leads to output x for which the derivative is sparse
+% (if the psuudo-sigma is suitably set).
+
+% theta : shape parameter
+theta = 0;
+
+% Run LPF/CSD algorithm
+[x1, f, cost] = lpfcsd2(y, d, fc, theta, ps, 'L1', 0, 0, Nit);
+
+txt1 = sprintf('LPF/CSD [L1 penalty, \\theta = %.3f, \\sigma = %.3f]', theta, ps);
+
+figure(1)
+clf
+
+subplot(2, 1, 1)
+plot(n, y)
+xlim(xlim1)
+title('Raw data')
+xlabel('Time (n)')
+
+subplot(2, 1, 2)
+plot(n, x1);
+xlim(xlim1)
+title(txt1)
+xlabel('Time (n)')
+
+
+%%
+% With theta = 1, the CSD component does not have the little blocks.
+% With theta = 0, the CSD component does not have a baseline of zero.
+
+
+%% Intermediate theta value
+% 0 < theta < 1
+
+% theta : shape parameter
+theta = 0.05;
+
+% Run LPF/CSD algorithm
+[x, f, cost, lam0, lam1] = lpfcsd2(y, d, fc, theta, ps, 'L1', 0, 0, Nit);
+
+txt = sprintf('LPF/CSD [L1 penalty, \\theta = %.3f, \\sigma = %.3f]', theta, ps);
+
+figure(1)
+clf
+
+subplot(2, 1, 1)
+plot(n, y)
+xlim(xlim1)
+title('Raw data')
+xlabel('Time (n)')
+
+subplot(2, 1, 2)
+plot(n, x);
+xlim(xlim1)
+title(txt)
+xlabel('Time (n)')
+
+%% Display output signals
+
+set(0, 'DefaultAxesFontSize', 9)
+
+figure(2)
+clf
+
+subplot(4, 1, 1)
+line(n, y);
+title('Raw data')
+xlim([0 N])
+xlabel('Time (n)')
+
+subplot(4, 1, 2)
+line(n, x0)
+title(txt0)
+xlim([0 N])
+xlabel('Time (n)')
+
+subplot(4, 1, 3)
+line(n, x1)
+title(txt1)
+xlim([0 N])
+xlabel('Time (n)')
+
+subplot(4, 1, 4)
+line(n, x);
+title(txt)
+xlim([0 N])
+xlabel('Time (n)')
+
+figtitle('Estimation of Artifacts using LPF/CSD with L1 Penalty');
+
+orient tall
+print -dpdf figures/LPFCSD_Example_fig1
+
+
+%% Display corrected data
+
+figure(2)
+clf
+
+subplot(4, 1, 1)
+line(n, y, 'color', 'black');
+title('Raw data');
+xlim([0 N])
+xlabel('Time (n)')
+
+subplot(4, 1, 2)
+line(n, x - median(x), 'color', 'black');
+title(txt)
+xlim([0 N])
+xlabel('Time (n)')
+
+subplot(4, 1, 3)
+line(n, y - x, 'color', 'black');
+title('Corrected data')
+xlabel('Time (n)')
+xlim([0 N])
+
+GRAY = [1 1 1] * 0.7;
+subplot(4, 1, 4)
+line(n, y, 'color', GRAY, 'lineWidth', 1)
+line(n, y - x, 'color', 'black');
+legend('Raw data', 'Corrected data')
+xlim([0 N])
+xlabel('Time (n)')
+
+figtitle('Artifact Correction using LPF/CSD with L1 Penalty');
+
+orient tall
+print -dpdf figures/LPFCSD_Example_fig2
+
+%% Display cost function history
+% The cost function converges within 30 iterations.
+
+figure(1)
+clf
+plot(cost)
+title('Cost function history')
+xlabel('Iteration')
+
+
+%% Lambda parameters
+% Verify that lpfcsd and lpfcsd2 give the same output signals
+% when lpfcsd is used with the corresponding lambda parameter values.
+
+% Run LPF/CSD algorithm
+[x, f, cost, lam0, lam1] = lpfcsd2(y, d, fc, theta, ps, 'L1', 0, 0, Nit);
+[x_, f_, cost_] = lpfcsd(y, d, fc, lam0, lam1, 'L1', 0, 0, Nit);
+
+% These values should be zero or approximately zero
+disp(max(abs(x - x_)))
+disp(max(abs(f - f_)))
+disp(max(abs(cost - cost_)))
+
+
+%% Non-convex penalty
+% The L1 norm penalty, used above, can lead to an under-estimation of
+% the amplitudes of transients. Non-convex penalties can estimate the
+% amplitude of transients more fully. Here, we use the 'atan' non-convex
+% penalty.
+
+% theta : shape parameter
+theta = 0.05;
+
+% pen : penalty function
+pen = 'atan';
+
+% r : non-convexity parameter (nominal value = 0.5)
+r = 0.5;
+
+txt = sprintf('LPF/CSD [%s penalty, \\theta = %.3f, \\sigma = %.3f]', pen, theta, ps);
+
+% Run LPF/CSD algorithm
+% Initialize with L1 solution
+[x_atan, f_atan, cost, lam0, lam1] = lpfcsd2(y, d, fc, theta, ps, pen, r, r, Nit, x);
+% [x_atan, f_atan, cost, lam0, lam1] = lpfcsd2(y, d, fc, theta, ps, pen, r, r, Nit);
+
+figure(2)
+clf
+
+subplot(4, 1, 1)
+line(n, y, 'color', 'black');
+title('Raw data');
+xlabel('Time (n)')
+xlim([0 N])
+
+subplot(4, 1, 2)
+line(n, x_atan - median(x_atan), 'color', 'black');
+title(txt)
+xlabel('Time (n)')
+xlim([0 N])
+
+subplot(4, 1, 3)
+line(n, y - x_atan, 'color', 'black');
+title('Corrected data')
+xlabel('Time (n)')
+xlim([0 N])
+
+GRAY = [1 1 1] * 0.7;
+subplot(4, 1, 4)
+line(n, y, 'color', GRAY, 'lineWidth', 1)
+line(n, y - x_atan, 'color', 'black');
+legend('Raw data', 'Corrected data')
+xlabel('Time (n)')
+xlim([0 N])
+
+figtitle('Artifact Correction using LPF/CSD with Arctangent Penalty');
+
+orient tall
+print -dpdf figures/LPFCSD_Example_fig3
+
+
+%%
+
+set(0, 'DefaultAxesFontSize', 'remove')
+
+
+
+
+##### SOURCE END #####
+--></body></html>
