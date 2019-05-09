@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+/root/Desktop/Datos_Macaque/M.m/external_tool/simbio/ipm_linux_opt_NoOutput -i sourcesimulation -h /root/Desktop/Datos_Macaque/newSimBioModel/4sh/Monkey-EEG.v -s /root/Desktop/Datos_Macaque/newSimBioModel/4sh/Monkey-EEG.elc -dip /root/Desktop/Datos_Macaque/newSimBioModel/4sh/Monkey-EEG.dip -o /root/Desktop/Datos_Macaque/newSimBioModel/LF/Monkey-EEG -p /root/Desktop/Datos_Macaque/newSimBioModel/4sh/Monkey-EEG.par -fwd FEM -sens EEG 2>&1 > /root/Desktop/Datos_Macaque/newSimBioModel/LF/Monkey-EEG.log

@@ -1,0 +1,561 @@
+=============================================================
+| Command line level user interface for inverse toolbox     |
+|                                                           |
+| (c) 2005-     by University of Muenster / Germany         |
+| (c) 2000-     by MPI-CBS Leipzig / Germany                |
+| (c) 2000-2003 by ANT-Software, Enschede / Netherlands     |
+| (c) 2003-2004 by University of Utah, SLC, USA             |
+|                                                           |
+| email : carsten.wolters@uni-muenster.de                   |
+| email : anwander@cbs.mpg.de                               |
+| email : duempelmann@ant-software.nl                       |
+| $Revision: 1.4 $    $Date: 2005/03/12 18:54:50 $          |
+| email : slew@sci.utah.edu                                 |
+=============================================================
+
+=================================================================
+| When using NeuroFEM, please reference the following papers:   |
+=================================================================
+=================================================================
+| Wolters, C.H., Grasedyck, L. and Hackbusch, W.                |
+| Efficient Computation of Lead Field Bases and Influence       |
+| Matrix for the FEM-based EEG and MEG Inverse Problem.         |
+| Inverse Problems, 20, pp.1099-1116 (2004).                    |
+=================================================================
+
+=================================================================
+| Anwander,A.,Wolters,C.H.,Duempelmann, M., Knoesche, T.R.      |
+| Influence of realistic skull and white matter anisotropy on   |
+| the inverse problem in EEG/MEG-source localization.           |
+| In Nowak, H., Haueisen, J., Giessler, F. and Huonker, R.:     |
+| Proc. of the 13th Int. Conf. on Biomagnetism, University of   |
+| Jena, Germany, VDE Verlag GmbH, Berlin, Offenbach, pp.679--681|
+| http://biomag2002.uni-jena.de, (2002).                        |
+=================================================================
+
+=================================================================
+| Wolters, C.H., Kuhn, M., Anwander, A. and Reitzinger, S.      |
+| A parallel algebraic multigrid solver for finite element      |
+| method based source localization in the human brain.          |
+| Comp.Vis.Sci., 5 (3), pp.165--177 (2002).                     |
+=================================================================
+
+keyw:sourcesimulation
+
+Inverse Procedure:  sourcesimulation
+
+HeadgridFileName:  /root/Desktop/Datos_Macaque/newSimBioModel/4sh/Monkey-ECoG.v
+
+SensorFileName:  /root/Desktop/Datos_Macaque/newSimBioModel/4sh/Monkey-ECoG.elc
+
+SourcesFileName:  /root/Desktop/Datos_Macaque/newSimBioModel/4sh/Monkey-ECoG.dip
+
+ResultFileName:  /root/Desktop/Datos_Macaque/newSimBioModel/LF/Monkey-ECoG
+
+ParameterFileName:  /root/Desktop/Datos_Macaque/newSimBioModel/4sh/Monkey-ECoG.par
+
+Forward Type: FEM
+
+Sensor Type: EEG
+
+Read parameter file: /root/Desktop/Datos_Macaque/newSimBioModel/4sh/Monkey-ECoG.par
+NeuroFEMSimulator Section present
+NeuroFEMGridGenerator Section present
+FileFormats Section present
+
+Read EEG sensors: /root/Desktop/Datos_Macaque/newSimBioModel/4sh/Monkey-ECoG.elc
+Number of Channels: 128
+Unit position: mm
+Scaling Factor for IP: 0.001000
+DEPTH1 DEPTH2 DEPTH3 DEPTH4 DEPTH5 DEPTH6 DEPTH7 DEPTH8 DEPTH9 DEPTH10 DEPTH11 DEPTH12 DEPTH13 DEPTH14 DEPTH15 DEPTH16 DEPTH17 DEPTH18 DEPTH19 DEPTH20 DEPTH21 DEPTH22 DEPTH23 DEPTH24 DEPTH25 DEPTH26 DEPTH27 DEPTH28 DEPTH29 DEPTH30 DEPTH31 DEPTH32 DEPTH33 DEPTH34 DEPTH35 DEPTH36 DEPTH37 DEPTH38 DEPTH39 DEPTH40 DEPTH41 DEPTH42 DEPTH43 DEPTH44 DEPTH45 DEPTH46 DEPTH47 DEPTH48 DEPTH49 DEPTH50 DEPTH51 DEPTH52 DEPTH53 DEPTH54 DEPTH55 DEPTH56 DEPTH57 DEPTH58 DEPTH59 DEPTH60 DEPTH61 DEPTH62 DEPTH63 DEPTH64 DEPTH65 DEPTH66 DEPTH67 DEPTH68 DEPTH69 DEPTH70 DEPTH71 DEPTH72 DEPTH73 DEPTH74 DEPTH75 DEPTH76 DEPTH77 DEPTH78 DEPTH79 DEPTH80 DEPTH81 DEPTH82 DEPTH83 DEPTH84 DEPTH85 DEPTH86 DEPTH87 DEPTH88 DEPTH89 DEPTH90 DEPTH91 DEPTH92 DEPTH93 DEPTH94 DEPTH95 DEPTH96 DEPTH97 DEPTH98 DEPTH99 DEPTH100 DEPTH101 DEPTH102 DEPTH103 DEPTH104 DEPTH105 DEPTH106 DEPTH107 DEPTH108 DEPTH109 DEPTH110 DEPTH111 DEPTH112 DEPTH113 DEPTH114 DEPTH115 DEPTH116 DEPTH117 DEPTH118 DEPTH119 DEPTH120 DEPTH121 DEPTH122 DEPTH123 DEPTH124 DEPTH125 DEPTH126 DEPTH127 DEPTH128 
+  HeadGridFileName : /root/Desktop/Datos_Macaque/newSimBioModel/4sh/Monkey-ECoG.v
+
+Read dipole data: /root/Desktop/Datos_Macaque/newSimBioModel/4sh/Monkey-ECoG.dip
+Number of Dipoles: 30021
+Number of Samples: 1
+[SCALING] Scaling to SI units: dipole positions to m, magnitude to Am!
+[SCALING] Scaling to SI units: dipole positions to m, magnitude to Am!
+[SCALING] Scaling to SI units: dipole positions to m, magnitude to Am!
+[SCALING] Scaling to SI units: dipole positions to m, magnitude to Am!
+[SCALING] Scaling to SI units: dipole positions to m, magnitude to Am!
+[SCALING] Scaling to SI units: dipole positions to m, magnitude to Am!
+[SCALING] Scaling to SI units: dipole positions to m, magnitude to Am!
+[SCALING] Scaling to SI units: dipole positions to m, magnitude to Am!
+[SCALING] Scaling to SI units: dipole positions to m, magnitude to Am!
+[SCALING] Scaling to SI units: dipole positions to m, magnitude to Am!
+
+  Entered NeuroFEM Simulator
+
+  Reading HeadGridFile : /root/Desktop/Datos_Macaque/newSimBioModel/4sh/Monkey-ECoG.v
+read FIL_Vista FIL_Mesh ...
+  Partition(s) not found ... use only serial version !!
+  nelems 4859467
+  nverts 777505
+  partitions 1
+ ... read FIL_Vista FIL_Mesh 
+copy FIL_Vista FIL_Mesh ... 
+ [SCALING] The FE simulator assumes the given FE nodes in the unit mm!! 
+... copy FIL_Vista FIL_Mesh 
+copy conductivity ... 
+read conductivity attribute from FIL_Mesh if available...
+ [SCALING] The FE simulator assumes the given conductivity is in S/m!! 
+... use conductivity 0.33 S/m for sigma_0 for the mathematical dipole 
+ Only material properties are given in the FIL_Vista FIL_Mesh.
+ They now have to be transformed to conductivities.
+ The given conductivities in the parameterfile are assumed to be in S/m, 
+ but internally, the FE simulator needs S/mm!
+ ==>Scaling of the given parameter file conductivities by: 0.001000
+  Assign material label 1 with conductivity 0.00033 S/mm.
+  Assign material label 3 with conductivity 0.00033 S/mm.
+  Assign material label 4 with conductivity 1e-09 S/mm.
+  Assign material label 2 with conductivity 4.1e-06 S/mm.
+... copy conductivity 
+  Geometry file read  /root/Desktop/Datos_Macaque/newSimBioModel/4sh/Monkey-ECoG.v
+  Number of elements: 4859467
+  Number of    nodes: 777505
+  Number of element partitions:  1
+  Number of node partitions:  1
+
+
+  Fill nodal sets with related element numbers
+
+
+  Compute surface of the fem grid and add sensor positions to the fem grid
+
+  Compute surface of the fem grid
+  Surface of the fem grid computed
+  Number of surface elements :17784
+
+  Compute normals of the surface grid
+  Normals of the surface grid computed
+
+  Copy sensor configuration
+  0 sEEG sensor positions read from sensor-class
+
+  128 iEEG sensor positions read from sensor-class
+
+  Maximum number of nodes per element in allocation: 8
+  Allocate surface nodes marker
+  8894 Surface nodes extracted from volume grid
+
+  Compute sensor elements
+  0 Sensor elements computed
+
+  Compute list of sensor nodes
+  iEEG-channel 1 : Label: DEPTH1 : x:-3.04524 y:40.3508 z:22.3637
+       Closest FE node: 15186 : x:-3.0452 y:40.3508 z:22.3637
+      Distance: 6.33808e-05
+  iEEG-channel 2 : Label: DEPTH2 : x:-4.47779 y:40.2507 z:24.599
+       Closest FE node: 15195 : x:-4.4777 y:40.2507 z:24.599
+      Distance: 9.16294e-05
+  iEEG-channel 3 : Label: DEPTH3 : x:-5.83581 y:39.6276 z:27.7136
+       Closest FE node: 15202 : x:-5.8357 y:39.6276 z:27.7136
+      Distance: 0.000113086
+  iEEG-channel 4 : Label: DEPTH4 : x:-6.19167 y:36.7135 z:31.0944
+       Closest FE node: 15211 : x:-6.1916 y:36.7135 z:31.0944
+      Distance: 7.76662e-05
+  iEEG-channel 5 : Label: DEPTH5 : x:-5.45802 y:33.2732 z:34.1151
+       Closest FE node: 15220 : x:-5.4579 y:33.2731 z:34.1151
+      Distance: 0.000137843
+  iEEG-channel 6 : Label: DEPTH6 : x:-3.89791 y:28.8212 z:36.476
+       Closest FE node: 15229 : x:-3.8978 y:28.8212 z:36.476
+      Distance: 0.000111768
+  iEEG-channel 7 : Label: DEPTH7 : x:-2.47292 y:24.8284 z:38.0322
+       Closest FE node: 15238 : x:-2.4728 y:24.8283 z:38.0321
+      Distance: 0.000155345
+  iEEG-channel 8 : Label: DEPTH8 : x:-1.49681 y:21.9463 z:38.8643
+       Closest FE node: 15247 : x:-1.4967 y:21.9462 z:38.8643
+      Distance: 0.000131696
+  iEEG-channel 9 : Label: DEPTH9 : x:-16.3119 y:35.2434 z:22.3802
+       Closest FE node: 13916 : x:-16.3118 y:35.2434 z:22.3802
+      Distance: 8.00668e-05
+  iEEG-channel 10 : Label: DEPTH10 : x:-16.4566 y:35.5744 z:26.1938
+       Closest FE node: 13925 : x:-16.4565 y:35.5744 z:26.1937
+      Distance: 0.000132615
+  iEEG-channel 11 : Label: DEPTH11 : x:-15.4509 y:33.2087 z:29.815
+       Closest FE node: 13933 : x:-15.4509 y:33.2087 z:29.8149
+      Distance: 7.29502e-05
+  iEEG-channel 12 : Label: DEPTH12 : x:-13.7582 y:29.977 z:33.4339
+       Closest FE node: 13942 : x:-13.7581 y:29.977 z:33.4338
+      Distance: 0.00013717
+  iEEG-channel 13 : Label: DEPTH13 : x:-13.406 y:26.1446 z:35.3436
+       Closest FE node: 13951 : x:-13.406 y:26.1446 z:35.3436
+      Distance: 6.58544e-05
+  iEEG-channel 14 : Label: DEPTH14 : x:-13.5996 y:22.0832 z:36.6141
+       Closest FE node: 13960 : x:-13.5995 y:22.0832 z:36.614
+      Distance: 0.000103605
+  iEEG-channel 15 : Label: DEPTH15 : x:-13.9119 y:16.6373 z:38.0471
+       Closest FE node: 13969 : x:-13.9118 y:16.6372 z:38.0471
+      Distance: 9.88031e-05
+  iEEG-channel 16 : Label: DEPTH16 : x:-13.7225 y:13.0557 z:38.7615
+       Closest FE node: 13978 : x:-13.7225 y:13.0557 z:38.7614
+      Distance: 8.6582e-05
+  iEEG-channel 17 : Label: DEPTH17 : x:-19.7066 y:32.5603 z:23.5715
+       Closest FE node: 13987 : x:-19.7066 y:32.5603 z:23.5715
+      Distance: 4.74716e-05
+  iEEG-channel 18 : Label: DEPTH18 : x:-19.4379 y:31.4786 z:27.1362
+       Closest FE node: 13993 : x:-19.4379 y:31.4786 z:27.1362
+      Distance: 4.16752e-05
+  iEEG-channel 19 : Label: DEPTH19 : x:-18.3569 y:28.7138 z:30.628
+       Closest FE node: 14001 : x:-18.3568 y:28.7138 z:30.6279
+      Distance: 0.000129313
+  iEEG-channel 20 : Label: DEPTH20 : x:-18.2504 y:23.463 z:32.919
+       Closest FE node: 14010 : x:-18.2504 y:23.463 z:32.919
+      Distance: 3.50111e-05
+  iEEG-channel 21 : Label: DEPTH21 : x:-18.7238 y:19.8764 z:34.21
+       Closest FE node: 14019 : x:-18.7237 y:19.8764 z:34.2099
+      Distance: 0.000122197
+  iEEG-channel 22 : Label: DEPTH22 : x:-18.7774 y:16.4987 z:35.6991
+       Closest FE node: 14028 : x:-18.7773 y:16.4987 z:35.6991
+      Distance: 0.000110842
+  iEEG-channel 23 : Label: DEPTH23 : x:-16.8657 y:11.1834 z:38.066
+       Closest FE node: 14037 : x:-16.8657 y:11.1834 z:38.066
+      Distance: 5.4706e-05
+  iEEG-channel 24 : Label: DEPTH24 : x:-12.9269 y:7.44719 z:39.516
+       Closest FE node: 14045 : x:-12.9268 y:7.4472 z:39.516
+      Distance: 0.000108358
+  iEEG-channel 25 : Label: DEPTH25 : x:-10.052 y:2.62478 z:40.0568
+       Closest FE node: 14052 : x:-10.052 y:2.6247 z:40.0568
+      Distance: 8.38399e-05
+  iEEG-channel 26 : Label: DEPTH26 : x:-22.437 y:27.3767 z:25.5481
+       Closest FE node: 14061 : x:-22.437 y:27.3767 z:25.5481
+      Distance: 4.86969e-05
+  iEEG-channel 27 : Label: DEPTH27 : x:-22.2355 y:24.4008 z:28.7859
+       Closest FE node: 14070 : x:-22.2355 y:24.4007 z:28.7859
+      Distance: 7.30201e-05
+  iEEG-channel 28 : Label: DEPTH28 : x:-21.7219 y:20.5952 z:31.4243
+       Closest FE node: 14078 : x:-21.7218 y:20.5952 z:31.4243
+      Distance: 0.000129307
+  iEEG-channel 29 : Label: DEPTH29 : x:-21.1839 y:16.3878 z:33.7629
+       Closest FE node: 14087 : x:-21.1838 y:16.3878 z:33.7629
+      Distance: 8.02247e-05
+  iEEG-channel 30 : Label: DEPTH30 : x:-20.0545 y:10.9351 z:36.2859
+       Closest FE node: 14096 : x:-20.0545 y:10.9351 z:36.2859
+      Distance: 7.19296e-05
+  iEEG-channel 31 : Label: DEPTH31 : x:-18.2419 y:6.68453 z:37.8873
+       Closest FE node: 14105 : x:-18.2418 y:6.6845 z:37.8873
+      Distance: 8.21342e-05
+  iEEG-channel 32 : Label: DEPTH32 : x:-16.0022 y:4.06244 z:38.7642
+       Closest FE node: 14114 : x:-16.0022 y:4.0624 z:38.7642
+      Distance: 6.48812e-05
+  iEEG-channel 33 : Label: DEPTH33 : x:-13.938 y:-0.136232 z:38.9379
+       Closest FE node: 14123 : x:-13.9379 y:-0.1362 z:38.9379
+      Distance: 0.000110802
+  iEEG-channel 34 : Label: DEPTH34 : x:-12.6475 y:-3.75001 z:38.8335
+       Closest FE node: 14132 : x:-12.6474 y:-3.7499 z:38.8335
+      Distance: 0.00016261
+  iEEG-channel 35 : Label: DEPTH35 : x:-4.634 y:-5.78988 z:39.3669
+       Closest FE node: 10602 : x:-4.6339 y:-5.7898 z:39.3669
+      Distance: 0.00013884
+  iEEG-channel 36 : Label: DEPTH36 : x:-25.4064 y:25.1715 z:21.7454
+       Closest FE node: 14140 : x:-25.4063 y:25.1715 z:21.7453
+      Distance: 0.000106566
+  iEEG-channel 37 : Label: DEPTH37 : x:-25.4183 y:21.7888 z:25.558
+       Closest FE node: 14149 : x:-25.4183 y:21.7887 z:25.5579
+      Distance: 0.000103076
+  iEEG-channel 38 : Label: DEPTH38 : x:-25.5667 y:18.4275 z:28.8873
+       Closest FE node: 14158 : x:-25.5666 y:18.4274 z:28.8873
+      Distance: 0.000106911
+  iEEG-channel 39 : Label: DEPTH39 : x:-24.6272 y:14.5768 z:31.2902
+       Closest FE node: 14167 : x:-24.6271 y:14.5768 z:31.2902
+      Distance: 0.000108243
+  iEEG-channel 40 : Label: DEPTH40 : x:-23.6807 y:10.1916 z:33.8672
+       Closest FE node: 14176 : x:-23.6807 y:10.1915 z:33.8672
+      Distance: 8.73968e-05
+  iEEG-channel 41 : Label: DEPTH41 : x:-21.1689 y:5.60341 z:36.0554
+       Closest FE node: 14185 : x:-21.1688 y:5.6034 z:36.0553
+      Distance: 0.000100852
+  iEEG-channel 42 : Label: DEPTH42 : x:-18.8609 y:1.52186 z:37.1853
+       Closest FE node: 14194 : x:-18.8609 y:1.5218 z:37.1853
+      Distance: 7.95584e-05
+  iEEG-channel 43 : Label: DEPTH43 : x:-17.6431 y:-2.30419 z:37.5742
+       Closest FE node: 14203 : x:-17.6431 y:-2.3041 z:37.5741
+      Distance: 0.000128139
+  iEEG-channel 44 : Label: DEPTH44 : x:-15.6157 y:-4.95146 z:37.7325
+       Closest FE node: 14212 : x:-15.6156 y:-4.9514 z:37.7324
+      Distance: 0.000103252
+  iEEG-channel 45 : Label: DEPTH45 : x:-7.44867 y:-8.66984 z:37.926
+       Closest FE node: 10611 : x:-7.4486 y:-8.6698 z:37.9259
+      Distance: 0.000100013
+  iEEG-channel 46 : Label: DEPTH46 : x:-2.68949 y:-10.3693 z:36.956
+       Closest FE node: 10620 : x:-2.6894 y:-10.3693 z:36.956
+      Distance: 0.000102686
+  iEEG-channel 47 : Label: DEPTH47 : x:-26.8147 y:23.1182 z:19.5027
+       Closest FE node: 14221 : x:-26.8147 y:23.1181 z:19.5027
+      Distance: 6.78989e-05
+  iEEG-channel 48 : Label: DEPTH48 : x:-27.6847 y:19.7111 z:22.2337
+       Closest FE node: 14230 : x:-27.6846 y:19.7111 z:22.2336
+      Distance: 0.000129711
+  iEEG-channel 49 : Label: DEPTH49 : x:-28.1168 y:15.7255 z:25.2684
+       Closest FE node: 14239 : x:-28.1167 y:15.7255 z:25.2684
+      Distance: 8.42404e-05
+  iEEG-channel 50 : Label: DEPTH50 : x:-28.1121 y:12.0083 z:27.9183
+       Closest FE node: 14248 : x:-28.1121 y:12.0082 z:27.9183
+      Distance: 8.24878e-05
+  iEEG-channel 51 : Label: DEPTH51 : x:-27.3743 y:7.93322 z:30.1496
+       Closest FE node: 14256 : x:-27.3743 y:7.9332 z:30.1495
+      Distance: 7.54768e-05
+  iEEG-channel 52 : Label: DEPTH52 : x:-24.3805 y:3.16136 z:33.2629
+       Closest FE node: 14264 : x:-24.3805 y:3.1613 z:33.2629
+      Distance: 6.60635e-05
+  iEEG-channel 53 : Label: DEPTH53 : x:-23.7665 y:-0.592365 z:33.7277
+       Closest FE node: 14273 : x:-23.7664 y:-0.5923 z:33.7276
+      Distance: 0.000134041
+  iEEG-channel 54 : Label: DEPTH54 : x:-21.2496 y:-4.39455 z:35.0126
+       Closest FE node: 14282 : x:-21.2496 y:-4.3945 z:35.0126
+      Distance: 5.3017e-05
+  iEEG-channel 55 : Label: DEPTH55 : x:-18.5516 y:-8.22687 z:35.5674
+       Closest FE node: 14290 : x:-18.5516 y:-8.2268 z:35.5674
+      Distance: 7.15698e-05
+  iEEG-channel 56 : Label: DEPTH56 : x:-27.7089 y:19.2091 z:15.8376
+       Closest FE node: 14299 : x:-27.7089 y:19.2091 z:15.8376
+      Distance: 2.38993e-05
+  iEEG-channel 57 : Label: DEPTH57 : x:-28.8873 y:16.1567 z:18.3222
+       Closest FE node: 14308 : x:-28.8872 y:16.1567 z:18.3221
+      Distance: 8.8715e-05
+  iEEG-channel 58 : Label: DEPTH58 : x:-29.9155 y:13.1163 z:21.1163
+       Closest FE node: 14317 : x:-29.9154 y:13.1163 z:21.1163
+      Distance: 0.000101891
+  iEEG-channel 59 : Label: DEPTH59 : x:-30.2978 y:9.36487 z:23.846
+       Closest FE node: 14326 : x:-30.2977 y:9.3648 z:23.846
+      Distance: 0.000116294
+  iEEG-channel 60 : Label: DEPTH60 : x:-29.3854 y:4.46563 z:26.3531
+       Closest FE node: 14335 : x:-29.3853 y:4.4656 z:26.3531
+      Distance: 8.1154e-05
+  iEEG-channel 61 : Label: DEPTH61 : x:-27.1843 y:1.0216 z:29.8264
+       Closest FE node: 14343 : x:-27.1842 y:1.0216 z:29.8264
+      Distance: 0.000110375
+  iEEG-channel 62 : Label: DEPTH62 : x:-25.5157 y:-2.75 z:31.3483
+       Closest FE node: 14352 : x:-25.5157 y:-2.7499 z:31.3482
+      Distance: 0.000125527
+  iEEG-channel 63 : Label: DEPTH63 : x:-24.4816 y:-6.81445 z:31.3067
+       Closest FE node: 14360 : x:-24.4815 y:-6.8144 z:31.3066
+      Distance: 0.000127838
+  iEEG-channel 64 : Label: DEPTH64 : x:-21.9573 y:-11.384 z:32.3995
+       Closest FE node: 14369 : x:-21.9573 y:-11.384 z:32.3995
+      Distance: 4.9119e-05
+  iEEG-channel 65 : Label: DEPTH65 : x:-26.4087 y:23.1084 z:16.3559
+       Closest FE node: 14378 : x:-26.4086 y:23.1084 z:16.3559
+      Distance: 9.81755e-05
+  iEEG-channel 66 : Label: DEPTH66 : x:-28.3717 y:18.514 z:17.7772
+       Closest FE node: 14387 : x:-28.3716 y:18.5139 z:17.7771
+      Distance: 0.00013278
+  iEEG-channel 67 : Label: DEPTH67 : x:-29.6604 y:13.6294 z:17.809
+       Closest FE node: 14396 : x:-29.6603 y:13.6294 z:17.809
+      Distance: 0.000107128
+  iEEG-channel 68 : Label: DEPTH68 : x:-30.7984 y:8.92682 z:19.3859
+       Closest FE node: 14405 : x:-30.7983 y:8.9268 z:19.3858
+      Distance: 0.000138778
+  iEEG-channel 69 : Label: DEPTH69 : x:-31.0721 y:4.72681 z:20.6877
+       Closest FE node: 14414 : x:-31.072 y:4.7268 z:20.6876
+      Distance: 8.89557e-05
+  iEEG-channel 70 : Label: DEPTH70 : x:-31.083 y:-0.018059 z:22.3107
+       Closest FE node: 14423 : x:-31.0829 y:-0.018 z:22.3107
+      Distance: 0.000121275
+  iEEG-channel 71 : Label: DEPTH71 : x:-30.5267 y:-4.74488 z:23.6395
+       Closest FE node: 14432 : x:-30.5267 y:-4.7448 z:23.6395
+      Distance: 9.48183e-05
+  iEEG-channel 72 : Label: DEPTH72 : x:-29.1059 y:-8.95307 z:24.6654
+       Closest FE node: 14441 : x:-29.1058 y:-8.953 z:24.6654
+      Distance: 0.000126783
+  iEEG-channel 73 : Label: DEPTH73 : x:-26.4373 y:-12.8404 z:25.7558
+       Closest FE node: 14450 : x:-26.4372 y:-12.8403 z:25.7558
+      Distance: 0.000154101
+  iEEG-channel 74 : Label: DEPTH74 : x:-26.0206 y:20.091 z:12.3087
+       Closest FE node: 14459 : x:-26.0205 y:20.091 z:12.3087
+      Distance: 0.000100553
+  iEEG-channel 75 : Label: DEPTH75 : x:-28.0626 y:16.6646 z:13.5986
+       Closest FE node: 14468 : x:-28.0625 y:16.6646 z:13.5986
+      Distance: 0.000117769
+  iEEG-channel 76 : Label: DEPTH76 : x:-29.9946 y:12.1462 z:14.6828
+       Closest FE node: 14477 : x:-29.9945 y:12.1462 z:14.6827
+      Distance: 8.88357e-05
+  iEEG-channel 77 : Label: DEPTH77 : x:-31.0116 y:7.34717 z:14.95
+       Closest FE node: 14486 : x:-31.0115 y:7.3471 z:14.95
+      Distance: 9.86385e-05
+  iEEG-channel 78 : Label: DEPTH78 : x:-31.6261 y:3.58056 z:16.6986
+       Closest FE node: 14495 : x:-31.626 y:3.5805 z:16.6985
+      Distance: 0.000117537
+  iEEG-channel 79 : Label: DEPTH79 : x:-31.9014 y:-1.59036 z:17.7128
+       Closest FE node: 14504 : x:-31.9014 y:-1.5903 z:17.7128
+      Distance: 7.89904e-05
+  iEEG-channel 80 : Label: DEPTH80 : x:-31.2079 y:-6.31183 z:18.7455
+       Closest FE node: 14513 : x:-31.2078 y:-6.3118 z:18.7455
+      Distance: 7.67493e-05
+  iEEG-channel 81 : Label: DEPTH81 : x:-30.0528 y:-10.1334 z:19.7268
+       Closest FE node: 14521 : x:-30.0527 y:-10.1333 z:19.7268
+      Distance: 0.000118323
+  iEEG-channel 82 : Label: DEPTH82 : x:-27.3259 y:-14.1398 z:21.0892
+       Closest FE node: 14529 : x:-27.3258 y:-14.1397 z:21.0892
+      Distance: 0.000135548
+  iEEG-channel 83 : Label: DEPTH83 : x:-20.8183 y:-14.8666 z:31.4216
+       Closest FE node: 14538 : x:-20.8182 y:-14.8665 z:31.4216
+      Distance: 0.000155576
+  iEEG-channel 84 : Label: DEPTH84 : x:-17.5881 y:-16.7677 z:32.1777
+       Closest FE node: 14547 : x:-17.5881 y:-16.7676 z:32.1776
+      Distance: 9.70977e-05
+  iEEG-channel 85 : Label: DEPTH85 : x:-13.3383 y:-18.234 z:32.8144
+       Closest FE node: 14556 : x:-13.3382 y:-18.2339 z:32.8144
+      Distance: 0.000113428
+  iEEG-channel 86 : Label: DEPTH86 : x:-4.37338 y:-19.8732 z:31.8514
+       Closest FE node: 15427 : x:-4.3733 y:-19.8732 z:31.8514
+      Distance: 9.218e-05
+  iEEG-channel 87 : Label: DEPTH87 : x:-23.4536 y:-15.8782 z:26.7219
+       Closest FE node: 14565 : x:-23.4535 y:-15.8781 z:26.7218
+      Distance: 0.000151686
+  iEEG-channel 88 : Label: DEPTH88 : x:-19.3785 y:-18.9529 z:28.1341
+       Closest FE node: 14574 : x:-19.3785 y:-18.9528 z:28.1341
+      Distance: 8.7084e-05
+  iEEG-channel 89 : Label: DEPTH89 : x:-14.72 y:-21.0672 z:28.9483
+       Closest FE node: 14583 : x:-14.7199 y:-21.0671 z:28.9483
+      Distance: 9.63682e-05
+  iEEG-channel 90 : Label: DEPTH90 : x:-5.43518 y:-21.3614 z:29.6048
+       Closest FE node: 15436 : x:-5.4351 y:-21.3613 z:29.6048
+      Distance: 0.000104325
+  iEEG-channel 91 : Label: DEPTH91 : x:-23.8026 y:-17.9921 z:21.9001
+       Closest FE node: 14592 : x:-23.8025 y:-17.992 z:21.9001
+      Distance: 0.000140698
+  iEEG-channel 92 : Label: DEPTH92 : x:-19.7763 y:-21.0911 z:23.6732
+       Closest FE node: 14600 : x:-19.7762 y:-21.0911 z:23.6732
+      Distance: 0.000121736
+  iEEG-channel 93 : Label: DEPTH93 : x:-15.2989 y:-23.1635 z:25.1032
+       Closest FE node: 14609 : x:-15.2988 y:-23.1634 z:25.1031
+      Distance: 0.000148296
+  iEEG-channel 94 : Label: DEPTH94 : x:-6.88647 y:-23.6623 z:26.6358
+       Closest FE node: 15445 : x:-6.8864 y:-23.6623 z:26.6358
+      Distance: 7.70373e-05
+  iEEG-channel 95 : Label: DEPTH95 : x:-27.8539 y:16.376 z:11.3165
+       Closest FE node: 14618 : x:-27.8538 y:16.376 z:11.3165
+      Distance: 9.6948e-05
+  iEEG-channel 96 : Label: DEPTH96 : x:-29.7176 y:11.641 z:11.9766
+       Closest FE node: 14627 : x:-29.7175 y:11.641 z:11.9766
+      Distance: 9.57702e-05
+  iEEG-channel 97 : Label: DEPTH97 : x:-30.5193 y:7.53544 z:12.0948
+       Closest FE node: 14636 : x:-30.5192 y:7.5354 z:12.0948
+      Distance: 6.90361e-05
+  iEEG-channel 98 : Label: DEPTH98 : x:-31.6556 y:2.01216 z:13.289
+       Closest FE node: 14644 : x:-31.6555 y:2.0121 z:13.289
+      Distance: 0.00010318
+  iEEG-channel 99 : Label: DEPTH99 : x:-31.2073 y:-2.75993 z:13.5029
+       Closest FE node: 14652 : x:-31.2073 y:-2.7599 z:13.5029
+      Distance: 5.27241e-05
+  iEEG-channel 100 : Label: DEPTH100 : x:-30.3399 y:-7.8632 z:14.4984
+       Closest FE node: 14661 : x:-30.3398 y:-7.8631 z:14.4984
+      Distance: 0.000151788
+  iEEG-channel 101 : Label: DEPTH101 : x:-29.0359 y:-12.1434 z:15.2593
+       Closest FE node: 14670 : x:-29.0358 y:-12.1433 z:15.2593
+      Distance: 0.000149006
+  iEEG-channel 102 : Label: DEPTH102 : x:-27.1184 y:-16.1267 z:16.2231
+       Closest FE node: 14679 : x:-27.1183 y:-16.1267 z:16.2231
+      Distance: 7.69282e-05
+  iEEG-channel 103 : Label: DEPTH103 : x:-24.4252 y:-19.6947 z:17.3299
+       Closest FE node: 14686 : x:-24.4251 y:-19.6946 z:17.3299
+      Distance: 0.000126562
+  iEEG-channel 104 : Label: DEPTH104 : x:-21.2509 y:-22.2353 z:18.614
+       Closest FE node: 14695 : x:-21.2508 y:-22.2352 z:18.614
+      Distance: 9.60757e-05
+  iEEG-channel 105 : Label: DEPTH105 : x:-17.5725 y:-24.2486 z:20.1577
+       Closest FE node: 14703 : x:-17.5724 y:-24.2486 z:20.1576
+      Distance: 0.000123029
+  iEEG-channel 106 : Label: DEPTH106 : x:-8.03601 y:-24.923 z:23.5432
+       Closest FE node: 15454 : x:-8.0359 y:-24.9229 z:23.5432
+      Distance: 0.000166889
+  iEEG-channel 107 : Label: DEPTH107 : x:-24.9894 y:21.6523 z:11.931
+       Closest FE node: 14711 : x:-24.9893 y:21.6522 z:11.931
+      Distance: 9.50194e-05
+  iEEG-channel 108 : Label: DEPTH108 : x:-23.9434 y:21.5128 z:9.72491
+       Closest FE node: 14719 : x:-23.9433 y:21.5127 z:9.7249
+      Distance: 0.000125544
+  iEEG-channel 109 : Label: DEPTH109 : x:-25.5308 y:18.8688 z:9.38615
+       Closest FE node: 14728 : x:-25.5307 y:18.8688 z:9.3861
+      Distance: 9.7453e-05
+  iEEG-channel 110 : Label: DEPTH110 : x:-27.2896 y:14.6853 z:8.15308
+       Closest FE node: 14737 : x:-27.2896 y:14.6853 z:8.1531
+      Distance: 2.89723e-05
+  iEEG-channel 111 : Label: DEPTH111 : x:-28.8132 y:11.2092 z:8.81557
+       Closest FE node: 14746 : x:-28.8131 y:11.2092 z:8.8155
+      Distance: 0.000130886
+  iEEG-channel 112 : Label: DEPTH112 : x:-29.8718 y:6.05004 z:7.794
+       Closest FE node: 14755 : x:-29.8717 y:6.05 z:7.794
+      Distance: 0.000122268
+  iEEG-channel 113 : Label: DEPTH113 : x:-29.5482 y:1.82297 z:8.5197
+       Closest FE node: 14764 : x:-29.5481 y:1.8229 z:8.5197
+      Distance: 9.29678e-05
+  iEEG-channel 114 : Label: DEPTH114 : x:-28.4376 y:-3.67166 z:9.69155
+       Closest FE node: 14772 : x:-28.4375 y:-3.6716 z:9.6915
+      Distance: 9.37631e-05
+  iEEG-channel 115 : Label: DEPTH115 : x:-26.6269 y:-7.63673 z:10.2815
+       Closest FE node: 14779 : x:-26.6269 y:-7.6367 z:10.2814
+      Distance: 8.55497e-05
+  iEEG-channel 116 : Label: DEPTH116 : x:-27.4515 y:-11.9929 z:12.6773
+       Closest FE node: 14787 : x:-27.4515 y:-11.9929 z:12.6773
+      Distance: 4.56297e-05
+  iEEG-channel 117 : Label: DEPTH117 : x:-25.0598 y:-16.355 z:12.8781
+       Closest FE node: 14796 : x:-25.0597 y:-16.3549 z:12.8781
+      Distance: 0.000126394
+  iEEG-channel 118 : Label: DEPTH118 : x:-22.9368 y:-20.2576 z:13.4571
+       Closest FE node: 14803 : x:-22.9367 y:-20.2576 z:13.4571
+      Distance: 9.17497e-05
+  iEEG-channel 119 : Label: DEPTH119 : x:-21.1228 y:-22.2838 z:14.0596
+       Closest FE node: 14812 : x:-21.1227 y:-22.2837 z:14.0595
+      Distance: 0.000160967
+  iEEG-channel 120 : Label: DEPTH120 : x:-17.9492 y:-24.7644 z:16.2548
+       Closest FE node: 14820 : x:-17.9491 y:-24.7643 z:16.2547
+      Distance: 0.000154613
+  iEEG-channel 121 : Label: DEPTH121 : x:-8.9445 y:-25.724 z:21.2995
+       Closest FE node: 15463 : x:-8.9444 y:-25.7239 z:21.2995
+      Distance: 0.00015478
+  iEEG-channel 122 : Label: DEPTH122 : x:-22.3971 y:21.4768 z:7.33718
+       Closest FE node: 14827 : x:-22.3971 y:21.4768 z:7.3372
+      Distance: 3.43952e-05
+  iEEG-channel 123 : Label: DEPTH123 : x:-23.3866 y:19.229 z:6.2182
+       Closest FE node: 14836 : x:-23.3866 y:19.229 z:6.2182
+      Distance: 4.63768e-05
+  iEEG-channel 124 : Label: DEPTH124 : x:-24.8871 y:16.9086 z:6.36561
+       Closest FE node: 14845 : x:-24.887 y:16.9085 z:6.3656
+      Distance: 0.000101572
+  iEEG-channel 125 : Label: DEPTH125 : x:-25.4983 y:12.8985 z:4.26771
+       Closest FE node: 14854 : x:-25.4983 y:12.8985 z:4.2677
+      Distance: 2.59327e-05
+  iEEG-channel 126 : Label: DEPTH126 : x:-18.2203 y:20.2528 z:3.09917
+       Closest FE node: 14862 : x:-18.2202 y:20.2528 z:3.0991
+      Distance: 9.05748e-05
+  iEEG-channel 127 : Label: DEPTH127 : x:-21.0338 y:17.935 z:3.15065
+       Closest FE node: 14871 : x:-21.0337 y:17.935 z:3.1506
+      Distance: 0.000106496
+  iEEG-channel 128 : Label: DEPTH128 : x:-23.4462 y:14.8768 z:3.04646
+       Closest FE node: 14880 : x:-23.4461 y:14.8768 z:3.0464
+      Distance: 0.000104011
+  Number of EEG-channels   128
+           sEEG-channels   0
+           iEEG-channels   128
+  Number of MEG-channels   0
+
+  Node number with ZMIN: 2201 ZMIN= -8.0315 (numbering starts with ZERO)
+
+  Compute vector for dirichlet boundary condition
+
+  Dirichlet value of node 2202 is: 0
+
+  Establishing compact storage for grid structure
+  Compact storage established length: 6423368
+  Sparseness of matrix is 0.00212513 [%]
+  Establishing compact storage for unsymmetric structure 
+  Compact storage established length: 12069231
+  Sparseness of matrix is 0.00199652 [%]
+
+  Maximum number of neighbours of a node 31
+  Number of channels 128
+
+Tue Oct 30 12:03:35 2018
+ Compiling system matrices
+ Compiling volume-matrix 
+ searching the nodes next to the electrodes
+ sum of all distances:    0.000
+ range of electrodes positions
+ ****** < x < ******
+ ****** < y < ******
+ ****** < z < ******
+ Completed percentage of this task indicated by dots
+ 0---10---20---30---40---50---60---70---80---90--100
+ >................................................. STOP volele 3; problem with element/detj      4847073 -1.00000000004630251E-012
