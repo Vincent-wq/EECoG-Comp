@@ -1,5 +1,5 @@
 # EECoG-Comp (organizing)
-This is an open source matlab based tool box for simltaneous EEG and ECoG data analysis and simulation by Qing Wang et al.( Brain Topogr. paper).
+This is an open source matlab based tool box for simltaneous EEG and ECoG data analysis and simulation by Qing Wang et al.( Brain Topogr. paper, https://link.springer.com/article/10.1007/s10548-019-00708-w).
 The folders are organized as follows:
 1. EECoG-FWM: the forward modeling codes (related external tools);
 2. LF: the EEG and ECoG lead field output folder;
@@ -15,3 +15,5 @@ The files ara organized as follows:
 5. res_collectMonkeySimulationBlock.m: collect block source Monkey simulation results;
 6. res_collectMonkeySimulationRand.m: collect random source Monkey simulation results;
 7. Framework.tif: the framework of this pipeline.
+All the other data in Tab. 2 can be downloaded from here:
+https://drive.google.com/file/d/1Mj2S4662ZoYdReaDBALEJMzXjrS0bNdt/view
