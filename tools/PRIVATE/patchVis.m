@@ -15,7 +15,7 @@ if isempty(Nodes)
     Nodes = P.Vertices;
 end
 % format the input values
-indp = ismember(P.Vertices,Nodes,'rows');
+indp = find(ismember(P.Vertices,Nodes,'rows')==1);
 ValDisp = zeros(size(P.Vertices,1),1)+min(Val);
 
 if isfield(conf,'log') && conf.log ==1
@@ -53,8 +53,8 @@ shading interp
 %% light & lighting
 lightangle(-45,30)
 hP.FaceLighting = 'gouraud';    
-hP.AmbientStrength = conf.material(1);
-hP.DiffuseStrength = conf.material(2);
+hP.AmbientStrength  = conf.material(1);
+hP.DiffuseStrength  = conf.material(2);
 hP.SpecularStrength = conf.material(3);
 hP.SpecularExponent = conf.material(4);
 hP.SpecularColorReflectance =  conf.material(5);

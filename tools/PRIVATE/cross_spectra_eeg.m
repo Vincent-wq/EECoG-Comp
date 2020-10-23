@@ -1,9 +1,8 @@
-function [Svv, Cvv, F] = cross_spectra_eeg(Data, Fs, FMax, nw)
+function [Svv, F] = cross_spectra_eeg(Data, Fs, FMax, nw)
 % cross_spectra_eeg use the multitaper methods to estimate the crosspectrum
 % of multichannel time series matrix.
 %
 % Outputs: Svv  : Cross-spectrum matrix [NSensor*NSensor*Nf];
-%          Cvv  : Normalized Cross-spectrum matrix [NSensor*NSensor*Nf];
 %           F   : The frequency ruler.
 % Inputs:  Data : in format of Number of Sensor * Number of time points *
 %                 Number of segments;
@@ -14,7 +13,8 @@ function [Svv, Cvv, F] = cross_spectra_eeg(Data, Fs, FMax, nw)
 % 
 % Created by Pedro Valdes on xxx.xxx.xxx.
 % Last modified by Vincent on 27th Oct. 2018
-
+% Last modified by Vincent on 30th April 2019, remove the normalize part as
+% a new function named normCrossSpectrum.
 [NSensor, Nt, Nseg] = size(Data); % Get dimensions of the Data .          
 tapers  = dpss(Nt,nw); tapers = reshape(tapers,[1,Nt,2*nw]); % generate tappers.
 deltaf = Fs/(Nt-1);
@@ -23,7 +23,6 @@ F      = F(F<FMax);               % The output frequency ruler.
 Nf     = length(F);               % Number of frequency points.
 
 Svv = zeros(NSensor,NSensor,Nf);  % init of the cross-spectrum matrix.
-Cvv = zeros(NSensor,NSensor,Nf);  % init of the coherence matrix.
 
 for seg = 1:Nseg
     tmp = Data(:, :, seg);
@@ -39,10 +38,4 @@ for seg = 1:Nseg
     end        
 end
 Svv   = Svv/Nseg;                % average over segments
-for k = 1:Nf
-    tmp =squeeze(Svv(:,:,k));
-    tmpD = diag(tmp);
-    tmpDD = diag(sqrt(tmpD));
-    Cvv(:,:,k) = tmpDD\tmp/tmpDD;
-end
 end
