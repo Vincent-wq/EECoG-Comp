@@ -1,4 +1,4 @@
-# EECoG-Comp (organizing)
+# EECoG-Comp (updating)
 This is an open source matlab based tool box for simltaneous EEG and ECoG data analysis and simulation by Qing Wang et al.( Brain Topogr. paper, https://link.springer.com/article/10.1007/s10548-019-00708-w).
 The folders are organized as follows:
 1. EECoG-FWM: the forward modeling codes (related external tools);
